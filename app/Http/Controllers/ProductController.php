@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Product;
 use App\Http\Requests\StoreProductRequest;
 use App\Http\Requests\UpdateProductRequest;
+use App\Http\Resources\ProductResource;
 
 class ProductController extends Controller
 {
@@ -40,10 +41,7 @@ class ProductController extends Controller
         ]);
 
         // Return a JSON response with the created product
-        return response()->json([
-            'message' => 'Product created successfully',
-            'product' => $product
-        ], 201);
+        return new ProductResource($product);
     }
 
     /**
@@ -52,9 +50,7 @@ class ProductController extends Controller
     public function show(Product $product)
     {
         // Return a JSON response with the specified product
-        return response()->json([
-            'product' => $product
-        ], 200);
+        return new ProductResource($product);
     }
 
     /**
@@ -77,10 +73,7 @@ class ProductController extends Controller
         $product->update($validated);
 
         // Return a JSON response with the updated product
-        return response()->json([
-            'message' => 'Product updated successfully',
-            'product' => $product
-        ], 200);
+        return new ProductResource($product);
     }
 
     /**
